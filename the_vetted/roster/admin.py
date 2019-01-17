@@ -8,6 +8,7 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ('first_name', 'last_name', 'username')
     ordering = ('pk',)
 
+
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'company')
