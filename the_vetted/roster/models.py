@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 class Company(models.Model):
     name = models.CharField(max_length=20)
     admin = models.OneToOneField('User', related_name='admin', on_delete=models.SET_NULL, null=True)
-    in_roster = models.BooleanField(default=False)
+    using_roster_app = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

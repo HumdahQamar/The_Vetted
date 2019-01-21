@@ -118,3 +118,12 @@ class CompanyList(ListView):
     #     # context['user'] = self.request.user
     #     context['companies'] = Company.objects.order_by('name')
 
+
+def company_add(request, pk):
+    Company.objects.filter(pk=pk).update(using_roster_app=True)
+    return redirect('browse_companies')
+
+
+def company_remove(request, pk):
+    Company.objects.filter(pk=pk).update(using_roster_app=False)
+    return redirect('browse_companies')

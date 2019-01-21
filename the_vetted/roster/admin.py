@@ -18,7 +18,7 @@ class TeamAdmin(admin.ModelAdmin):
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name')
+    list_display = ('pk', 'name', 'admin', 'using_roster_app')
     search_fields = ('name',)
     ordering = ('pk',)
 
