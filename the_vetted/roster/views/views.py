@@ -1,9 +1,13 @@
 from django.contrib.auth import authenticate, login as auth_login
-from django.http import HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView, FormView
+from django.urls import reverse_lazy, reverse
+from django.views import View
+from django.views.generic.edit import CreateView, FormView, UpdateView
 
 from roster.forms import UserSignupForm
+from roster.models import User
 
 
 def index(request):
@@ -43,3 +47,57 @@ class UserSignup(FormView):
         auth_login(self.request, user)
         return redirect('index')
 
+
+class LandingPage(LoginRequiredMixin, View):
+    login_url = reverse_lazy('login')
+
+    def get(self, request, *args, **kwargs):
+        return render(
+            request,
+            'roster/landing_page.html',
+            {
+                'user': request.user
+            }
+        )
+
+
+class Settings(LoginRequiredMixin, View):
+    login_url = reverse_lazy('login')
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        if user.is_authenticated:
+            if user.is_superuser:
+                return render(
+                    request,
+                    'roster/settings_super_admin.html',
+                    {
+                        'user': user
+                    }
+                )
+            elif user.is_staff:
+                return render(
+                    request,
+                    'roster/settings_admin.html',
+                    {
+                        'user': user
+                    }
+                )
+            else:
+                return render(
+                    request,
+                    'roster/settings_basic.html',
+                    {
+                        'user': user
+                    }
+                )
+
+
+class UpdateProfile(UpdateView):
+    model = User
+    fields = ['email']
+    pk_url_kwarg = 'pk'
+    template_name = 'roster/update_profile.html'
+
+    def get_queryset(self):
+        return User.objects.filter(pk=self.request.user.pk)

@@ -1,0 +1,9 @@
+{% extends 'roster/base.html' %}
+{% block navbar_links %}
+    <a href="{% url 'logout' %}">Logout</a>
+{% endblock %}
+{% block contents %}
+    {% block settings_options %}
+        <a href="{% url 'update_profile' user.pk %}">Update Profile</a>
+    {% endblock %}
+{% endblock %}
