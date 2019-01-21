@@ -40,3 +40,11 @@ class User(AbstractUser):
         return ','.join(user_type)
 
     get_type.short_description = 'User Type'
+
+
+class Invite(models.Model):
+    sender = models.ForeignKey(User, related_name='sender', on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, related_name='receiver', on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, related_name='company', on_delete=models.CASCADE)
+    timestamp = models.DateField(auto_now_add=True)
+    message = models.CharField(max_length=500)

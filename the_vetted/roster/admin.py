@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import User, Team, Company
+from .models import User, Team, Company, Invite
 
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'username', 'email', 'bio', 'team', 'get_type')
+    list_display = ('pk', 'first_name', 'last_name', 'username', 'email', 'bio', 'team', 'get_type')
     search_fields = ('first_name', 'last_name', 'username')
     ordering = ('pk',)
 
@@ -21,3 +21,9 @@ class CompanyAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name')
     search_fields = ('name',)
     ordering = ('pk',)
+
+
+@admin.register(Invite)
+class InviteAdmin(admin.ModelAdmin):
+    list_display = ('sender', 'receiver', 'company', 'timestamp')
+    ordeing = ('pk',)
