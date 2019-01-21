@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 class Company(models.Model):
     name = models.CharField(max_length=20)
     admin = models.OneToOneField('User', related_name='admin', on_delete=models.SET_NULL, null=True)
+    in_roster = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -50,4 +51,4 @@ class Invite(models.Model):
     company = models.ForeignKey(Company, related_name='company', on_delete=models.CASCADE)
     timestamp = models.DateField(auto_now_add=True)
     message = models.CharField(max_length=500)
-    status = models.CharField(max_length=20)
+    status = models.CharField(max_length=20, default='Inactive')

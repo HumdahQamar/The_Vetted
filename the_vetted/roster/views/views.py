@@ -112,3 +112,9 @@ class CompanyList(ListView):
     # def get_context_data(self, *, object_list=None, **kwargs):
     def get_queryset(self):
         return Company.objects.order_by('name')
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     # context['user'] = self.request.user
+    #     context['companies'] = Company.objects.order_by('name')
+

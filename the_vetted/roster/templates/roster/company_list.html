@@ -8,7 +8,13 @@
     {% for company in company_list %}
         <p>Company Name: {{ company.name }}</p>
         <p>Admin: {{ company.admin }}</p>
-        <button>Join</button>
+        {% if user.is_employee and not user.team  %}
+            <button>Join</button>
+        {% elif user.is_employee and user.team %}
+            <button disabled>Join</button>
+        {% elif user.is_super_admin %}
+            <button>Invite to rostrr</button>
+        {% endif %}
         <br>
     {% endfor %}
 {% endblock %}

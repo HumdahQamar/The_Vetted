@@ -10,7 +10,7 @@
         <a href="{% url 'settings' %}">Manage Employees</a>
     {% endif %}
     {% if user.is_super_admin %}
-        <a href="{% url 'manage_companies' %}">Manage Companies</a>
+        <a href="{% url 'settings' %}">Manage Companies</a>
     {% endif %}
 {% endblock %}
 
