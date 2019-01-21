@@ -5,9 +5,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic.edit import CreateView, FormView, UpdateView
+from django.views.generic.list import ListView
 
 from roster.forms import UserSignupForm
-from roster.models import User
+from roster.models import User, Company
 
 
 def index(request):
@@ -48,13 +49,13 @@ class UserSignup(FormView):
         return redirect('index')
 
 
-class LandingPage(LoginRequiredMixin, View):
+class HomePage(LoginRequiredMixin, View):
     login_url = reverse_lazy('login')
 
     def get(self, request, *args, **kwargs):
         return render(
             request,
-            'roster/landing_page.html',
+            'roster/homepage.html',
             {
                 'user': request.user
             }
@@ -67,7 +68,7 @@ class Settings(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         user = request.user
         if user.is_authenticated:
-            if user.is_superuser:
+            if user.is_super_admin:
                 return render(
                     request,
                     'roster/settings_super_admin.html',
@@ -75,7 +76,7 @@ class Settings(LoginRequiredMixin, View):
                         'user': user
                     }
                 )
-            elif user.is_staff:
+            elif user.is_admin:
                 return render(
                     request,
                     'roster/settings_admin.html',
@@ -104,3 +105,10 @@ class UpdateProfile(UpdateView):
         return User.objects.filter(pk=self.request.user.pk)
 
 
+class CompanyList(ListView):
+    model = Company
+    template_name = 'roster/company_list.html'
+
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    def get_queryset(self):
+        return Company.objects.order_by('name')

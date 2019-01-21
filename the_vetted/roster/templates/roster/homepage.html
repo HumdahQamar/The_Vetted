@@ -1,0 +1,19 @@
+{% extends "roster/base.html" %}
+
+{% block navbar_links %}
+    <a href="{% url 'logout' %}">Logout</a>
+    <br>
+    <a href="{% url 'browse_companies' %}">Browse Companies</a>
+    <br>
+    <a href="{% url 'settings' %}">Settings</a>
+    {% if user.is_admin or user.is_super_admin %}
+        <a href="{% url 'settings' %}">Manage Employees</a>
+    {% endif %}
+    {% if user.is_super_admin %}
+        <a href="{% url 'manage_companies' %}">Manage Companies</a>
+    {% endif %}
+{% endblock %}
+
+{% block contents %}
+    <h1>Looking good, {{ user.username }}</h1>
+{% endblock %}

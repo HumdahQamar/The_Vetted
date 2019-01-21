@@ -24,6 +24,7 @@ class User(AbstractUser):
     is_employee = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_super_admin = models.BooleanField(default=False)
+    company = models.OneToOneField(Company, related_name='user_company', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.username
@@ -49,3 +50,4 @@ class Invite(models.Model):
     company = models.ForeignKey(Company, related_name='company', on_delete=models.CASCADE)
     timestamp = models.DateField(auto_now_add=True)
     message = models.CharField(max_length=500)
+    status = models.CharField(max_length=20)
