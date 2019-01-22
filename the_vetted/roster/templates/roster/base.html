@@ -1,55 +1,62 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-{#    <title>{% block title %}{% endblock %}</title>#}
-{#    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">#}
-{#    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">#}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <head>
+        <meta charset="UTF-8">
+    {#    <title>{% block title %}{% endblock %}</title>#}
+    {#    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">#}
+    {#    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">#}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'roster/style.css' %}">
+    </head>
+    <body>
+        <div class="main_container">
 
-</head>
-<body>
-    <div class="row">
-{#    <nav class="navbar navbar-light navbar_main">#}
-        <div id=" nav-container navbar_main">
-            {% block navbar_links_old %}
-                <a href="{% url 'home' %}">Home</a>
-                <a href="{% url 'browse_companies' %}">Browse Companies</a>
-                <a href="">Invites</a>
-                {% if user.is_admin or user.is_super_admin %}
-                    <a href="">Manage Employees</a>
-                {% endif %}
-                <a href="{% url 'settings' %}">Settings</a>
-                <a href="{% url 'logout' %}">Logout</a>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-light">
+                <div class="mx-auto my-2 order-0 order-md-1 position-relative">
+                    <a class="mx-auto" href="#">
+                        <img src="{% static 'roster/rostrr_logo_transparent_large.png' %}">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+            </nav>
+
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'browse_companies' %}">Browse Companies</a>
+                        </li>
+                        {% if user.is_admin or user.is_super_admin %}
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{% url 'home' %}">Manage Employees</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            {% block user_tag %}
+                <p>Logged in as {{ user.username }}</p>
             {% endblock %}
+            {% block contents %}{% endblock %}
+
         </div>
-{#    </nav>#}
-    </div>
-
-
-    <nav class="navbar navbar-light bg-light">
-        <form class="form-inline">
-            {% block navbar_links %}
-                <a href="{% url 'home' %}">Home</a>
-                <a href="{% url 'browse_companies' %}">Browse Companies</a>
-                <a href="">Invites</a>
-                {% if user.is_admin or user.is_super_admin %}
-                    <a href="">Manage Employees</a>
-                {% endif %}
-                <a href="{% url 'settings' %}">Settings</a>
-                <a href="{% url 'logout' %}">Logout</a>
-            {% endblock %}
-            <button class="btn btn-outline-success" type="button">Main button</button>
-            <button class="btn btn-sm btn-outline-secondary" type="button">Smaller button</button>
-        </form>
-    </nav>
-
-
-    {% block user_tag %}
-        <p>Logged in as {{ user.username }}</p>
-    {% endblock %}
-    {% block contents %}{% endblock %}
-
-</body>
+    </body>
 </html>
