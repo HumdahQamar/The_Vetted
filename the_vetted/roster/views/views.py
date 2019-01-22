@@ -69,23 +69,6 @@ class Settings(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         user = request.user
         if user.is_authenticated:
-            # if user.is_super_admin:
-            #     return render(
-            #         request,
-            #         'roster/settings_super_admin.html',
-            #         {
-            #             'user': user
-            #         }
-            #     )
-            # elif user.is_admin:
-            #     return render(
-            #         request,
-            #         'roster/settings_admin.html',
-            #         {
-            #             'user': user
-            #         }
-            #     )
-            # else:
             return render(
                 request,
                 'roster/settings_basic.html',

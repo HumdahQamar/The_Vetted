@@ -26,3 +26,12 @@
 .nav_sub {
     background-color: #B3B3B3;
 }
+
+.rostrr_button {
+    width: 30%;
+}
+
+.rounded_border {
+    border: 2px solid #B3B3B3;
+    border-radius: 12px;
+}
