@@ -5,10 +5,12 @@ from roster.views import views
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    # path('', views.index, name='index'),
     path('browse/companies', views.CompanyList.as_view(), name='browse_companies'),
     path('company/<int:pk>/add', views.company_add, name='company_add_to_rostrr'),
     path('company/<int:pk>/remove', views.company_remove, name='company_remove_from_rostrr'),
+    path('company/<int:pk>/details', views.CompanyDetails.as_view(), name='company_details'),
+    path('company/<int:pk>/details', views.CompanyDetails.as_view(), name='company_details'),
     path('signup/', views.UserSignup.as_view(), name='signup'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('manage/companies', views.CompanyList.as_view(), name='manage_companies'),

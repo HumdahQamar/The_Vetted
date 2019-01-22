@@ -1,0 +1,17 @@
+{% extends 'roster/base.html' %}
+
+{% block contents %}
+    <h1>{{ company.name }}</h1>
+    <h4>Admin: {{ company.admin.first_name }} {{ company.admin.last_name }}</h4>
+    {% for team in teams %}
+        <strong>{{ team.name }}</strong>
+        {% for employee in employees %}
+            {% if employee.team.pk == team.pk %}
+                <p>{{ employee.first_name }} {{ employee.last_name }}</p>
+                <p>Email Address: {{ employee.email }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    {% if user %}
+    {% endif %}
+{% endblock %}

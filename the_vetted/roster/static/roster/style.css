@@ -1,0 +1,15 @@
+.parent_login_panel {
+    position: relative;
+    margin: 0 auto;
+
+}
+
+#login_panel {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.navbar_main {
+    background-color: #008080;
+}

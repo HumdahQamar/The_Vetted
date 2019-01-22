@@ -1,18 +1,18 @@
 {% extends 'roster/base.html' %}
-{% block navbar_links %}
-    <a href="{% url 'home' %}">Home</a>
-    <a href="{% url 'logout' %}">Logout</a>
-    <br>
-{% endblock %}
+{#{% block navbar_links %}#}
+{#    <a href="{% url 'home' %}">Home</a>#}
+{#    <a href="{% url 'logout' %}">Logout</a>#}
+{#    <br>#}
+{#{% endblock %}#}
 
 {% block contents %}
     {% for company in company_list %}
-        <p>Company Name: {{ company.name }}</p>
+        <p>Company Name: <a href="{% url 'company_details' company.pk %}"> {{ company.name }}</a></p>
         <p>Admin: {{ company.admin }}</p>
         {% if company.using_roster_app %}
-            {% if not user.is_super_admin and not user.team  %}
+            {% if not user.is_super_admin and not user.company  %}
                 <button>Join</button>
-            {% elif not user.is_super_admin and user.team %}
+            {% elif not user.is_super_admin and user.company %}
                 <button disabled>Join</button>
             {% elif user.is_super_admin %}
                 <form action="{% url 'company_remove_from_rostrr' company.pk %}">

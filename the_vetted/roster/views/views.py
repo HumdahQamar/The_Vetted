@@ -1,27 +1,28 @@
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic.edit import CreateView, FormView, UpdateView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.list import ListView
 
 from roster.forms import UserSignupForm
-from roster.models import User, Company
+from roster.models import User, Company, Team
 
 
-def index(request):
-    user = request.user
-    if user.is_authenticated:
-        return render(
-            request,
-            'roster/index.html',
-            {
-                'user': user
-            }
-        )
-    return HttpResponse("Login pls!")
+# def index(request):
+#     user = request.user
+#     if user.is_authenticated:
+#         return render(
+#             request,
+#             'roster/index.html',
+#             {
+#                 'user': user
+#             }
+#         )
+#     return HttpResponse("Login pls!")
 
 
 class UserSignup(FormView):
@@ -46,7 +47,7 @@ class UserSignup(FormView):
             bio=bio
         )
         auth_login(self.request, user)
-        return redirect('index')
+        return redirect('homepage')
 
 
 class HomePage(LoginRequiredMixin, View):
@@ -68,30 +69,30 @@ class Settings(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         user = request.user
         if user.is_authenticated:
-            if user.is_super_admin:
-                return render(
-                    request,
-                    'roster/settings_super_admin.html',
-                    {
-                        'user': user
-                    }
-                )
-            elif user.is_admin:
-                return render(
-                    request,
-                    'roster/settings_admin.html',
-                    {
-                        'user': user
-                    }
-                )
-            else:
-                return render(
-                    request,
-                    'roster/settings_basic.html',
-                    {
-                        'user': user
-                    }
-                )
+            # if user.is_super_admin:
+            #     return render(
+            #         request,
+            #         'roster/settings_super_admin.html',
+            #         {
+            #             'user': user
+            #         }
+            #     )
+            # elif user.is_admin:
+            #     return render(
+            #         request,
+            #         'roster/settings_admin.html',
+            #         {
+            #             'user': user
+            #         }
+            #     )
+            # else:
+            return render(
+                request,
+                'roster/settings_basic.html',
+                {
+                    'user': user
+                }
+            )
 
 
 class UpdateProfile(UpdateView):
@@ -127,3 +128,23 @@ def company_add(request, pk):
 def company_remove(request, pk):
     Company.objects.filter(pk=pk).update(using_roster_app=False)
     return redirect('browse_companies')
+
+
+class CompanyDetails(DetailView):
+    model = Company
+    pk_url_kwarg = 'pk'
+    template_name = 'roster/company_details.html'
+
+    def get_context_data(self, **kwargs):
+        company = Company.objects.get(pk=self.kwargs.get('pk'))
+        context = super().get_context_data(**kwargs)
+        context['teams'] = Team.objects.filter(company=company).order_by('name')
+        context['employees'] = User.objects.filter(company=company).order_by('team', 'first_name')
+        return context
+        # employees = []
+        # for team in list(context.get('teams')):
+
+        # context['employees'] = User.objects.filter(company=company).order_by('name')
+        # context[]
+
+

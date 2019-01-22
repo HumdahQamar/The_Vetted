@@ -1,10 +1,41 @@
-{% block title %}Login{% endblock %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+{#    <title>{% block title %}{% endblock %}</title>#}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'roster/style.css' %}">
+</head>
 
-{% block content %}
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
-{% endblock %}
+<body>
+    {% load static %}
+
+    <div class="container-fluid">
+        <div class="row" style="height: 100vh">
+            <div class="col-sm-7">
+                <div style="background-image:url('{% static 'roster/login_teal_panel.jpg' %}'); height: 100%"></div>
+            </div>
+
+            <div class="col-sm-3 text-center parent_login_panel">
+                <div id="login_panel">
+                    <img src="{% static 'roster/rostrr_index_large.png' %}" alt="Rostrr Index Logo" style="width: 100%">
+                    <br><br><br>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-info">Login</button>
+                    </form>
+                    <br>
+                    <p>New to rostrr? <a href="{% url 'signup' %}">Sign up</a> now.</p>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div style="background-image:url('{% static 'roster/login_teal_panel.jpg' %}'); height: 100%"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+

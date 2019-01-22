@@ -25,7 +25,13 @@ class User(AbstractUser):
     is_employee = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_super_admin = models.BooleanField(default=False)
-    company = models.OneToOneField(Company, related_name='user_company', on_delete=models.SET_NULL, null=True)
+    company = models.ForeignKey(
+        Company,
+        related_name='user_company',
+        on_delete=models.SET_NULL,
+        null=True,
+        unique=False
+    )
 
     def __str__(self):
         return self.username
