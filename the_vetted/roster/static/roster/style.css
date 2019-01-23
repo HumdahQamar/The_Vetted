@@ -35,3 +35,12 @@
     border: 2px solid #B3B3B3;
     border-radius: 12px;
 }
+
+.homepage_card {
+    border: 2px solid #B3B3B3;
+    border-radius: 8px;
+}
+
+.bg-navbar {
+    background-image: url("login_teal_panel.jpg");
+}

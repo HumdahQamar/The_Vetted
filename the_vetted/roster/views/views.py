@@ -12,19 +12,6 @@ from roster.forms import UserSignupForm
 from roster.models import User, Company, Team
 
 
-# def index(request):
-#     user = request.user
-#     if user.is_authenticated:
-#         return render(
-#             request,
-#             'roster/index.html',
-#             {
-#                 'user': user
-#             }
-#         )
-#     return HttpResponse("Login pls!")
-
-
 class UserSignup(FormView):
     form_class = UserSignupForm
     template_name = 'roster/user_signup.html'
@@ -93,14 +80,8 @@ class CompanyList(ListView):
     model = Company
     template_name = 'roster/company_list.html'
 
-    # def get_context_data(self, *, object_list=None, **kwargs):
     def get_queryset(self):
         return Company.objects.order_by('name')
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     # context['user'] = self.request.user
-    #     context['companies'] = Company.objects.order_by('name')
 
 
 def company_add(request, pk):
@@ -124,10 +105,4 @@ class CompanyDetails(DetailView):
         context['teams'] = Team.objects.filter(company=company).order_by('name')
         context['employees'] = User.objects.filter(company=company).order_by('team', 'first_name')
         return context
-        # employees = []
-        # for team in list(context.get('teams')):
-
-        # context['employees'] = User.objects.filter(company=company).order_by('name')
-        # context[]
-
 
