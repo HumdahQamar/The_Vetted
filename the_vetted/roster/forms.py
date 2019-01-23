@@ -12,6 +12,7 @@ class UserSignupForm(UserCreationForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'bio')
 
+    # source: https://stackoverflow.com/questions/6396442/add-image-avatar-field-to-users-in-django
     def clean_avatar(self):
         avatar = self.cleaned_data.get('avatar')
 
