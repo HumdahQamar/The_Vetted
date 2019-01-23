@@ -19,12 +19,14 @@
 
             <div class="col-sm-3 text-center parent_login_panel">
                 <div id="login_panel">
-{#                    <img src="{% static 'roster/rostrr_index_large.png' %}" alt="Rostrr Index Logo" style="width: 100%">#}
-{#                    <br><br><br>#}
+                    <img src="{% static 'roster/rostrr_index_large.png' %}" alt="Rostrr Index Logo" style="width: 100%">
+                    <br><br><br>
                     <form method="post">
+{#                        <div class="form-group ">#}
                         {% csrf_token %}
                         {{ form.as_p }}
                         <button type="submit" class="btn btn-info">Create Account</button>
+{#                            </div>#}
                     </form>
                     <br>
                     <p>Already a user? <a href="{% url 'login' %}">Login</a></p>

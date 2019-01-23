@@ -99,3 +99,15 @@ ul {
 .button-text {
     font-color: #f9f9f9;
 }
+
+.helptext{
+    font-size: 0px;
+}
+
+#id_bio{
+    height: 50px;
+}
+
+.parent_login_panel ul li{
+    font-size: 0px;
+}
