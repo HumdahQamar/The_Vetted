@@ -80,7 +80,7 @@ class UpdateProfile(UpdateView):
     fields = ['first_name', 'last_name', 'email', 'bio']
     pk_url_kwarg = 'pk'
     template_name = 'roster/update_profile.html'
-    success_url = reverse_lazy('settings')  # change to some page that displays user info
+    success_url = reverse_lazy('home')  # change to some page that displays user info
 
     def get_queryset(self):
         return User.objects.filter(pk=self.request.user.pk)
