@@ -7,6 +7,7 @@ class Company(models.Model):
     admin = models.OneToOneField('User', related_name='admin', on_delete=models.SET_NULL, null=True)
     using_roster_app = models.BooleanField(default=False)
     logo = models.ImageField(upload_to='logos/', blank=True)
+    joined_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.name
@@ -26,6 +27,7 @@ class User(AbstractUser):
     is_employee = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_super_admin = models.BooleanField(default=False)
+    # joined_at = models.DateField(auto_now_add=True)
     company = models.ForeignKey(
         Company,
         related_name='user_company',

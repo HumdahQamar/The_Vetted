@@ -34,20 +34,30 @@ class UserSignup(FormView):
             bio=bio
         )
         auth_login(self.request, user)
-        return redirect('homepage')
+        return redirect('home')
 
 
-class HomePage(LoginRequiredMixin, View):
+class HomePage(LoginRequiredMixin, ListView):
+    model = User
     login_url = reverse_lazy('login')
+    template_name = 'roster/homepage.html'
 
-    def get(self, request, *args, **kwargs):
-        return render(
-            request,
-            'roster/homepage.html',
-            {
-                'user': request.user
-            }
-        )
+    # def get(self, request, *args, **kwargs):
+    #     return render(
+    #         request,
+    #         'roster/homepage.html',
+    #         {
+    #             'user': request.user
+    #         }
+    #     )
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        context = super().get_context_data(**kwargs)
+        context['user'] = user
+        context['new_to_roster_user'] = User.objects.order_by('-date_joined')[:5]
+        context['new_to_roster_company'] = Company.objects.order_by('-joined_at')[:5]
+        return context
 
 
 class Settings(LoginRequiredMixin, View):

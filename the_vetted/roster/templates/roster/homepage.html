@@ -1,26 +1,104 @@
 {% extends "roster/base.html" %}
 {% load static %}
-
-{% block contents %}
-    <div class="container-fluid" style="width: 100%;">
-        <div class="row">
-            <div class="col-sm-1"></div>
-                <div class="col-sm-3 homepage_card">
-                    <div class="row">
-                        <div class="col user_avatar text-center">
-                            <img src="{% static 'roster/default_avatar.png' %}" alt="Avatar" height="300" width="300">
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'roster/style.css' %}">
+    </head>
+    <body>
+        {% block contents %}
+            <div class="container-fluid" style="width: 100%;">
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                        <div class="col-sm-3">
+{#                            <div class="homepage_card"></div>#}
+                                <div class="row">
+                                    <div class="col homepage_card">
+                                    <div class="col user_avatar text-center">
+                                        <img src="{% static 'roster/default_avatar_coloured.png' %}" alt="Avatar" height="300" width="300">
+                                    </div>
+                                    <div class="col user_info_row text-center">
+                                        <p class="user_info">Name: {{ user.first_name }} {{ user.last_name }}</p>
+                                        <p class="user_info">Email: {{ user.email }}</p>
+                                        <p class="user_info">Company: {{ user.company }}</p>
+                                    </div>
+                                    </div>
+                                </div>
+{#                            </div>#}
                         </div>
-                        <div class="col user_info text-center">
-                            <p>{{ user.first_name }} {{ user.last_name }}</p>
-                            <p>{{ user.email }}</p>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-6 ">
+                        <div class="row homepage_card_header">
+                            <div class="col text-center card_header">
+                                <strong>New Companies</strong>
+                            </div>
+                        </div>
+                        <div class="row homepage_card">
+                            <div class="col-sm-4 text-center homepage_logo_company">
+                                <img src="{% static 'roster/default_logo_coloured.png' %}" alt="Company Logo" height="150" width="150">
+                            </div>
+                            <div class="col-sm-8">
+                            <br>
+                                {% for company in new_to_roster_company %}
+                                    <ul>
+                                        <li>{{ company.name }} joined rostrr on {{ company.joined_at.day }}-{{ company.joined_at.month }}-{{ company.joined_at.year }}</li>
+                                        {% if user.is_super_admin %}
+                                            {% if company.using_roster_app %}
+                                                <form action="{% url 'company_remove_from_rostrr' company.pk%}">
+                                                    <input class="btn btn-danger rostrr_button" type="submit" value="Remove from rostrr" />
+                                                </form>
+                                            {%  else %}
+                                                <form action="{% url 'company_add_to_rostrr' company.pk %}">
+                                                    <input class="btn btn-info rostrr_button" type="submit" value="Add to rostrr" />
+                                                </form>
+                                            {% endif %}
+                                        {% endif %}
+                                    <hr>
+                                    </ul>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <br><br><br>
+                        <div class="row homepage_card_header">
+                            <div class="col text-center card_header">
+                                <strong>New Users</strong>
+                            </div>
+                        </div>
+                        <div class="row homepage_card">
+                            <div class="col-sm-4 text-center homepage_avatar_users">
+                                <img src="{% static 'roster/default_avatar_coloured.png' %}" alt="Company Logo" height="150" width="150">
+                            </div>
+                            <div class="col-sm-8">
+                            <br>
+                                {% for user_item in new_to_roster_user %}
+                                    <ul>
+                                        <li>{{ user_item.first_name }} {{ user_item.last_name }} joined rostrr on {{ user_item.date_joined.day }}-{{ user_item.date_joined.month }}-{{ user_item.date_joined.year }}</li>
+                                        {% if user.is_admin or user.is_super_admin %}
+                                            {% if not user_item.company %}
+                                                <form action="{% url 'home'%}">
+                                                    <input class="btn btn-info rostrr_button" type="submit" value="Add to Company" />
+                                                </form>
+                                            {% else %}
+                                                <p>Company: {{ user.company }}</p>
+                                            {% endif %}
+
+                                            {% if user_item.company == user.company %}
+                                                <form action="{% url 'home'%}">
+                                                    <input class="btn btn-danger rostrr_button" type="submit" value="Remove from Company" />
+                                                </form>
+                                            {% endif %}
+                                        {% endif %}
+                                        <hr>
+                                    </ul>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
+                    <div class="col-sm-1"></div>
                 </div>
-            <div class="col-sm-1"></div>
-            <div class="col-sm-6">
-                <p class="homepage_card">Some text</p>
             </div>
-            <div class="col-sm-1"></div>
-        </div>
-    </div>
-{% endblock %}
+        {% endblock %}
+</body>

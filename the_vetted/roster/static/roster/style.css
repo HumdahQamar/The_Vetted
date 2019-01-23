@@ -20,7 +20,7 @@
 
 .main_container {
     background-color: #f9f9f9;
-    height: 100vh;
+    /*height: 100vh;*/
 }
 
 .nav_sub {
@@ -39,6 +39,7 @@
 .homepage_card {
     border: 2px solid #B3B3B3;
     border-radius: 8px;
+    /*float: left;*/
 }
 
 .bg-navbar {
@@ -53,4 +54,40 @@
 .user_avatar {
     padding-top: 50px;
     padding-bottom: 30px;
+}
+
+.user_info {
+    font-family: serif;
+    font-size: 30px;
+    color: #4D4D4D;
+}
+
+.user_info_row {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.homepage_logo_company {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.homepage_avatar_users {
+    margin-top: 25px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.homepage_card_header {
+    /*border: 2px solid #B3B3B3;*/
+    background-image: url("login_teal_panel.jpg");
+    border-radius: 8px;
+}
+
+.card_header{
+    color: #f9f9f9;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
