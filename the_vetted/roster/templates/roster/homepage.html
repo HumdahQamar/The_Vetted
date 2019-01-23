@@ -13,94 +13,116 @@
             <div class="container-fluid" style="width: 100%;">
                 <div class="row">
                     <div class="col-sm-1"></div>
-                        <div class="col-sm-3">
-{#                            <div class="homepage_card"></div>#}
-                                <div class="row">
-                                    <div class="col homepage_card">
-                                    <div class="col user_avatar text-center">
-                                        <img src="{% static 'roster/default_avatar_coloured.png' %}" alt="Avatar" height="300" width="300">
-                                    </div>
-                                    <div class="col user_info_row text-center">
-                                        <p class="user_info">Name: {{ user.first_name }} {{ user.last_name }}</p>
-                                        <p class="user_info">Email: {{ user.email }}</p>
-                                        <p class="user_info">Company: {{ user.company }}</p>
-                                    </div>
-                                    </div>
+                    <div class="col-sm-3">
+                            <div class="row">
+                                <div class="col homepage_card">
+                                <div class="col user_avatar text-center">
+                                    <img src="{% static 'roster/default_avatar_coloured.png' %}" alt="Avatar" height="300" width="300">
                                 </div>
-{#                            </div>#}
-                        </div>
+                                <div class="col user_info_row text-center">
+                                    <p class="user_info">Name: {{ user.first_name }} {{ user.last_name }}</p>
+                                    <p class="user_info">Email: {{ user.email }}</p>
+                                    <p class="user_info">Company: {{ user.company }}</p>
+                                </div>
+                                </div>
+                            </div>
+                    </div>
                     <div class="col-sm-1"></div>
-                    <div class="col-sm-6 ">
+
+
+
+                    <div class="col-sm-5 ">
                         <div class="row homepage_card_header">
                             <div class="col text-center card_header">
                                 <strong>New Companies</strong>
                             </div>
                         </div>
                         <div class="row homepage_card">
-                            <div class="col-sm-4 text-center homepage_logo_company">
-                                <img src="{% static 'roster/default_logo_coloured.png' %}" alt="Company Logo" height="150" width="150">
-                            </div>
-                            <div class="col-sm-8">
+                            <div class="col">
                             <br>
                                 {% for company in new_to_roster_company %}
                                     <ul>
-                                        <li>{{ company.name }} joined rostrr on {{ company.joined_at.day }}-{{ company.joined_at.month }}-{{ company.joined_at.year }}</li>
-                                        {% if user.is_super_admin %}
-                                            {% if company.using_roster_app %}
-                                                <form action="{% url 'company_remove_from_rostrr' company.pk%}">
-                                                    <input class="btn btn-danger rostrr_button" type="submit" value="Remove from rostrr" />
-                                                </form>
-                                            {%  else %}
-                                                <form action="{% url 'company_add_to_rostrr' company.pk %}">
-                                                    <input class="btn btn-info rostrr_button" type="submit" value="Add to rostrr" />
-                                                </form>
-                                            {% endif %}
-                                        {% endif %}
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-3 text-center">
+                                                    <img src="{% static 'roster/default_logo_coloured.png' %}" alt="Company Logo" height="60" width="60">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    {{ company.name }} joined rostrr on {{ company.joined_at.day }}-{{ company.joined_at.month }}-{{ company.joined_at.year }}
+                                                    {% if user.is_super_admin %}
+                                                        {% if company.using_roster_app %}
+                                                            <form action="{% url 'company_remove_from_rostrr' company.pk%}">
+                                                                <input class="btn btn-danger rostrr_button" type="submit" value="Remove from rostrr" />
+                                                            </form>
+                                                        {%  else %}
+                                                            <form action="{% url 'company_add_to_rostrr' company.pk %}">
+                                                                <input class="btn btn-info rostrr_button" type="submit" value="Add to rostrr" />
+                                                            </form>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col-sm-2"></div>
+                                            </div>
+                                        </li>
                                     <hr>
                                     </ul>
                                 {% endfor %}
                             </div>
                         </div>
                         <br><br><br>
+
+
+
+
                         <div class="row homepage_card_header">
                             <div class="col text-center card_header">
                                 <strong>New Users</strong>
                             </div>
                         </div>
                         <div class="row homepage_card">
-                            <div class="col-sm-4 text-center homepage_avatar_users">
-                                <img src="{% static 'roster/default_avatar_coloured.png' %}" alt="Company Logo" height="150" width="150">
-                            </div>
-                            <div class="col-sm-8">
+                            <div class="col">
                             <br>
                                 {% for user_item in new_to_roster_user %}
                                     <ul>
-                                        <li>{{ user_item.first_name }} {{ user_item.last_name }} joined rostrr on {{ user_item.date_joined.day }}-{{ user_item.date_joined.month }}-{{ user_item.date_joined.year }}</li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-3 text-center">
+                                                    <img src="{% static 'roster/default_avatar_coloured.png' %}" alt="Company Logo" height="60" width="60">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    {{ user_item.first_name }} {{ user_item.last_name }} joined rostrr on {{ user_item.date_joined.day }}-{{ user_item.date_joined.month }}-{{ user_item.date_joined.year }}
+                                                    {%  if user_item.company %}
+                                                        <p>Company: {{ user_item.company }}</p>
+                                                    {% endif %}
+
+                                                    {% if user.is_admin or user.is_super_admin %}
+                                                        {% if not user_item.company %}
+                                                            <a href="{% url 'add_user_to_company' user_item.pk user.company.pk %}">
+                                                                <button class="btn btn-info rostrr_button">Add to Company</button>
+                                                            </a>
+                                                            <a href="{% url 'invite_user' user_item.pk user.pk user.company.pk %}">
+                                                                <button class="btn btn-warning rostrr_button">Invite to Company</button>
+                                                            </a>
+                                                        {% endif %}
+
+                                                        {% if user_item.company == user.company %}
+                                                            <form action="{% url 'remove_user_from_company' user_item.pk%}">
+                                                                <input class="btn btn-danger rostrr_button" type="submit" value="Remove from Company" />
+                                                            </form>
+                                                        {% elif user_item.company != user.company and user_item.company %}
+                                                            <a href="{% url 'invite_user' user_item.pk user.pk user.company.pk %}">
+                                                                <button class="btn btn-warning rostrr_button">Invite to Company</button>
+                                                            </a>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col-sm-2"></div>
+                                            </div>
+                                        </li>
                                         <br>
-                                        {% if user.is_admin or user.is_super_admin %}
-                                            {% if not user_item.company %}
-{#                                                <form action="{% url 'add_user_to_company' user_item.pk user.company.pk %}">#}
-{#                                                    <input class="btn btn-info rostrr_button" type="submit" value="Add to Company" />#}
-{#                                                </form>#}
 
-                                                <a href="{% url 'add_user_to_company' user_item.pk user.company.pk %}">
-                                                    <button class="btn btn-info rostrr_button">Add to Company</button>
-                                                </a>
-                                                <a href="{% url 'invite_user' user_item.pk user.pk user.company.pk %}">
-                                                    <button class="btn btn-warning rostrr_button">Invite to Company</button>
-                                                </a>
-
-
-                                            {% else %}
-                                                <p>Company: {{ user.company }}</p>
-                                            {% endif %}
-
-                                            {% if user_item.company == user.company %}
-                                                <form action="{% url 'remove_user_from_company' user_item.pk%}">
-                                                    <input class="btn btn-danger rostrr_button" type="submit" value="Remove from Company" />
-                                                </form>
-                                            {% endif %}
-                                        {% endif %}
                                         <hr>
                                     </ul>
                                 {% endfor %}
