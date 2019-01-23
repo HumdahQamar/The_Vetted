@@ -28,7 +28,7 @@
 }
 
 .rostrr_button {
-    width: 30%;
+    width: 100%;
 }
 
 .rounded_border {
@@ -43,4 +43,9 @@
 
 .bg-navbar {
     background-image: url("login_teal_panel.jpg");
+}
+
+.company_logo_parent_div {
+    padding-left: 40px;
+    padding-bottom: 30px;
 }
