@@ -14,9 +14,11 @@ urlpatterns = [
     path('signup/', views.UserSignup.as_view(), name='signup'),
     path('logout/', LogoutView.as_view(template_name='roster/logout.html'), name='logout'),
     path('manage/companies', views.CompanyList.as_view(), name='manage_companies'),
-    path('manage/employees', views.CompanyList.as_view(), name='manage_employees'),
+    path('manage/users', views.UserList.as_view(), name='manage_users'),
     path('profile/', views.HomePage.as_view(), name='home'),
     path('profile/settings/', views.Settings.as_view(), name='settings'),
     path('profile/<int:pk>/update/', views.UpdateProfile.as_view(), name='update_profile'),
     path('login/', LoginView.as_view(template_name='roster/login.html'), name='login'),
+    path('user/<int:user_pk>/add/<int:company_pk>', views.add_user_to_company, name='add_user_to_company'),
+    path('user/<int:pk>/remove', views.remove_user_from_company, name='remove_user_from_company'),
 ]

@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -41,15 +41,6 @@ class HomePage(LoginRequiredMixin, ListView):
     model = User
     login_url = reverse_lazy('login')
     template_name = 'roster/homepage.html'
-
-    # def get(self, request, *args, **kwargs):
-    #     return render(
-    #         request,
-    #         'roster/homepage.html',
-    #         {
-    #             'user': request.user
-    #         }
-    #     )
 
     def get_context_data(self, **kwargs):
         user = self.request.user
@@ -115,4 +106,23 @@ class CompanyDetails(DetailView):
         context['teams'] = Team.objects.filter(company=company).order_by('name')
         context['employees'] = User.objects.filter(company=company).order_by('team', 'first_name')
         return context
+
+
+def add_user_to_company(request, user_pk, company_pk):
+    company = Company.objects.get(pk=company_pk)
+    User.objects.filter(pk=user_pk).update(company=company)
+    return redirect('home')
+
+
+def remove_user_from_company(request, pk):
+    User.objects.filter(pk=pk).update(company=None, team=None)
+    return redirect('home')
+
+
+class UserList(ListView):
+    model = User
+    template_name = 'roster/user_list.html'
+
+    def get_queryset(self):
+        return User.objects.order_by('first_name')
 

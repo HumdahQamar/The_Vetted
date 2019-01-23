@@ -78,7 +78,7 @@
                                         <li>{{ user_item.first_name }} {{ user_item.last_name }} joined rostrr on {{ user_item.date_joined.day }}-{{ user_item.date_joined.month }}-{{ user_item.date_joined.year }}</li>
                                         {% if user.is_admin or user.is_super_admin %}
                                             {% if not user_item.company %}
-                                                <form action="{% url 'home'%}">
+                                                <form action="{% url 'add_user_to_company' user_item.pk user.company.pk%}">
                                                     <input class="btn btn-info rostrr_button" type="submit" value="Add to Company" />
                                                 </form>
                                             {% else %}
@@ -86,7 +86,7 @@
                                             {% endif %}
 
                                             {% if user_item.company == user.company %}
-                                                <form action="{% url 'home'%}">
+                                                <form action="{% url 'remove_user_from_company' user_item.pk%}">
                                                     <input class="btn btn-danger rostrr_button" type="submit" value="Remove from Company" />
                                                 </form>
                                             {% endif %}
