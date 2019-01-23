@@ -1,18 +1,26 @@
 {% extends "roster/base.html" %}
+{% load static %}
 
 {% block contents %}
     <div class="container-fluid" style="width: 100%;">
         <div class="row">
             <div class="col-sm-1"></div>
-            <div class="col-sm-5">
-                <p class="homepage_card">Some text</p>
-            </div>
+                <div class="col-sm-3 homepage_card">
+                    <div class="row">
+                        <div class="col user_avatar text-center">
+                            <img src="{% static 'roster/default_avatar.png' %}" alt="Avatar" height="300" width="300">
+                        </div>
+                        <div class="col user_info text-center">
+                            <p>{{ user.first_name }} {{ user.last_name }}</p>
+                            <p>{{ user.email }}</p>
+                        </div>
+                    </div>
+                </div>
             <div class="col-sm-1"></div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <p class="homepage_card">Some text</p>
             </div>
             <div class="col-sm-1"></div>
         </div>
     </div>
-{#    <h1>Placeholder text</h1>#}
 {% endblock %}

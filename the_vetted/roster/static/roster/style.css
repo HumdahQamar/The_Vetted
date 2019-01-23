@@ -28,7 +28,7 @@
 }
 
 .rostrr_button {
-    width: 100%;
+    width: auto;
 }
 
 .rounded_border {
@@ -47,5 +47,10 @@
 
 .company_logo_parent_div {
     padding-left: 40px;
+    padding-bottom: 30px;
+}
+
+.user_avatar {
+    padding-top: 50px;
     padding-bottom: 30px;
 }

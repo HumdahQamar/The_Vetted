@@ -1,48 +1,59 @@
 {% extends 'roster/base.html' %}
+<!DOCTYPE html>
 {% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'roster/style.css' %}">
+    </head>
 
-{% block contents %}
-    <div class="container-fluid" style="width: 100%;">
-        <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4 ">
-            {% for company in company_list %}
-                <div class="rounded_border">
-                    <br><br>
-                    <div class="row company_logo_parent_div">
-                    <div class="col-sm-1 company_logo_div">
-                        <img src="{% static 'roster/default_logo.png' %}" alt="Company Logo" height="150" width="150">
-                    </div>
-                    <div class="col text-center">
-                        <p>Company Name: <a href="{% url 'company_details' company.pk %}"> {{ company.name }}</a></p>
-                        <p>Admin: {{ company.admin }}</p>
-                        {% if company.using_roster_app %}
-                            {% if not user.is_super_admin and not user.company  %}
-                                <button>Join</button>
-                            {% elif not user.is_super_admin and user.company %}
-                                <button disabled>Join</button>
-                            {% elif user.is_super_admin %}
-                                <form action="{% url 'company_remove_from_rostrr' company.pk %}">
-                                    <input class="btn btn-danger rostrr_button" type="submit" value="Remove from rostrr" />
-                                </form>
-                            {% endif %}
-                        {% else %}
-                            {% if not user.is_super_admin %}
-                                <p>This company does not use the rostrr app</p>
-                            {% elif user.is_super_admin %}
-                                <form action="{% url 'company_add_to_rostrr' company.pk %}">
-                                    <input class="btn btn-info rostrr_button" type="submit" value="Add to rostrr" />
-                                </form>
-                            {% endif %}
-                        {% endif %}
-                        <br><br>
-                    </div>
-                    </div>
+    <body>
+        {% block contents %}
+            <div class="container-fluid" style="width: 100%;">
+                <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4 ">
+                    {% for company in company_list %}
+                        <div class="rounded_border">
+                            <br><br>
+                            <div class="row company_logo_parent_div">
+                                <div class="col-sm-1 company_logo_div">
+                                    <img src="{% static 'roster/default_logo.png' %}" alt="Company Logo" height="150" width="150">
+                                </div>
+                            <div class="col-sm-2"></div>
+                                <div class="col text-center">
+                                    <p>Company Name: <a href="{% url 'company_details' company.pk %}"> {{ company.name }}</a></p>
+                                    <p>Admin: {{ company.admin }}</p>
+                                    {% if company.using_roster_app %}
+                                        {% if not user.is_super_admin and not user.company  %}
+                                            <button>Join</button>
+                                        {% elif not user.is_super_admin and user.company %}
+                                            <button disabled>Join</button>
+                                        {% elif user.is_super_admin %}
+                                            <form action="{% url 'company_remove_from_rostrr' company.pk %}">
+                                                <input class="btn btn-danger rostrr_button" type="submit" value="Remove from rostrr" />
+                                            </form>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if not user.is_super_admin %}
+                                            <p>This company does not use the rostrr app</p>
+                                        {% elif user.is_super_admin %}
+                                            <form action="{% url 'company_add_to_rostrr' company.pk %}">
+                                                <input class="btn btn-info rostrr_button" type="submit" value="Add to rostrr" />
+                                            </form>
+                                        {% endif %}
+                                    {% endif %}
+                                    <br><br>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    {% endfor %}
                 </div>
-                <br>
-            {% endfor %}
-        </div>
-        <div class="col-sm-4"></div>
-        </div>
-    </div>
-{% endblock %}
+                <div class="col-sm-4"></div>
+                </div>
+            </div>
+        {% endblock %}
+    </body>
+</html>
