@@ -1,0 +1,75 @@
+{% extends 'roster/base.html' %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'roster/style.css' %}">
+    </head>
+
+    <body>
+        {% block contents %}
+            <div class="container-fluid" style="width: 100%;">
+                <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4 ">
+                    {% for user_item in user_list %}
+                        <div class="rounded_border">
+                            <br><br>
+                            <div class="row company_logo_parent_div">
+                                <div class="col-sm-1 company_logo_div">
+                                    <img src="{% static 'roster/default_avatar_coloured.png' %}" alt="Company Logo" height="150" width="150">
+                                </div>
+                            <div class="col-sm-2"></div>
+                                <div class="col text-center">
+                                    <p>Name: {{ user_item.first_name }} {{ user_item.last_name }}</p>
+                                    <p>Email: {{ user_item.email }}</p>
+{#                                    <p> {{ company.admin }}</p>#}
+                                    {% if not user_item.company %}
+                                        {% if user.is_admin or user.is_super_admin%}
+{#                                            <form action="{% url 'add_user_to_company' user_item.pk user.company.pk %}">#}
+{#                                                <input class="btn btn-info rostrr_button" type="submit" value="Add to Company" />#}
+{#                                            </form>#}
+                                            <a href="{% url 'add_user_to_company' user_item.pk user.company.pk %}">
+                                                <button class="btn btn-info rostrr_button">Add to Company</button>
+                                            </a>
+                                            <a href="{% url 'invite_user' user_item.pk user.pk user.company.pk %}">
+                                                <button class="btn btn-warning rostrr_button">Invite to Company</button>
+                                            </a>
+{#                                        {% elif not user.is_super_admin and user.company %}#}
+{#                                            <button class="btn btn-info" disabled>Join</button>#}
+                                        {% else %}
+{#                                            <form action="{% url 'company_remove_from_rostrr' company.pk %}">#}
+{#                                                <input class="btn btn-danger rostrr_button" type="submit" value="Remove from rostrr" />#}
+{#                                            </form>#}
+                                            <p></p>
+                                        {% endif %}
+                                    {% else %}
+                                        <p>Company: {{ user_item.company.name }}</p>
+                                        {% if user.is_admin or user.is_super_admin %}
+                                            {% if user_item.company == user.company %}
+                                                <form action="{% url 'remove_user_from_company' user_item.pk %}">
+                                                    <input class="btn btn-danger rostrr_button" type="submit" value="Remove from Company" />
+                                                </form>
+                                            {% endif %}
+
+{#                                        {% elif user.is_super_admin %}#}
+{#                                            <form action="{% url 'company_add_to_rostrr' company.pk %}">#}
+{#                                                <input class="btn btn-info rostrr_button" type="submit" value="Add to rostrr" />#}
+{#                                            </form>#}
+                                        {% endif %}
+                                    {% endif %}
+                                    <br><br>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-4"></div>
+                </div>
+            </div>
+        {% endblock %}
+    </body>
+</html>

@@ -31,9 +31,12 @@
                         </li>
                         {% if user.is_admin or user.is_super_admin %}
                             <li class="nav-item active">
-                                <a class="nav-link" href="{% url 'home' %}">Manage Employees</a>
+                                <a class="nav-link" href="{% url 'manage_users' %}">Manage Users</a>
                             </li>
                         {% endif %}
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'invite_list' %}">Invites</a>
+                        </li>
                     </ul>
                 </div>
 
