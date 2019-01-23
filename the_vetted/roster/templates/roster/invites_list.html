@@ -1,0 +1,64 @@
+{% extends 'roster/base.html' %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'roster/style.css' %}">
+    </head>
+
+    <body>
+        {% block contents %}
+            <div class="container-fluid" style="width: 100%;">
+                {% if invite_list %}
+                    <div class="row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4 ">
+                        {% for invite in invite_list %}
+                            <div class="rounded_border">
+                                <br><br>
+                                <div class="row company_logo_parent_div">
+                                    <div class="col-sm-1 company_logo_div">
+                                        <img src="{% static 'roster/default_avatar_coloured.png' %}" alt="Company Logo" height="150" width="150">
+                                    </div>
+                                <div class="col-sm-2"></div>
+                                    <div class="col text-center">
+                                        <p>{{ invite.sender.first_name }} {{ invite.sender.last_name }} invited you to join {{ invite.company.name }}</p>
+                                        <p>Received on: {{ invite.timestamp.day }}-{{ invite.timestamp.month }}-{{ invite.timestamp.year }}</p>
+                                        <br>
+                                        <a href="{% url 'accept_invite' invite.pk %}">
+                                            <button class="btn btn-info rostrr_button">Accept</button>
+                                        </a>
+                                        <a href="{% url 'reject_invite' invite.pk %}">
+                                            <button class="btn btn-danger rostrr_button">Reject</button>
+                                        </a>
+                                        <br><br>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        {% endfor %}
+                    </div>
+                    <div class="col-sm-4"></div>
+                    </div>
+                {% else %}
+                        <div class="row">
+                            <div class="col-sm-4"></div>
+
+                            <div class="col-sm-4 text-center">
+                                <div id=" text-center">
+                                    <img src="{% static 'roster/default_logo_coloured.png' %}" alt="Rostrr Index Logo" style="width: 50%">
+                                    <br><br><br>
+                                    <h5>You have no invites yet.</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+{#                    </div>#}
+                {% endif %}
+
+            </div>
+        {% endblock %}
+    </body>
+</html>

@@ -28,9 +28,15 @@
 {#                                    <p> {{ company.admin }}</p>#}
                                     {% if not user_item.company %}
                                         {% if user.is_admin or user.is_super_admin%}
-                                            <form action="{% url 'add_user_to_company' user_item.pk user.company.pk %}">
-                                                <input class="btn btn-info rostrr_button" type="submit" value="Add to Company" />
-                                            </form>
+{#                                            <form action="{% url 'add_user_to_company' user_item.pk user.company.pk %}">#}
+{#                                                <input class="btn btn-info rostrr_button" type="submit" value="Add to Company" />#}
+{#                                            </form>#}
+                                            <a href="{% url 'add_user_to_company' user_item.pk user.company.pk %}">
+                                                <button class="btn btn-info rostrr_button">Add to Company</button>
+                                            </a>
+                                            <a href="{% url 'invite_user' user_item.pk user.pk user.company.pk %}">
+                                                <button class="btn btn-warning rostrr_button">Invite to Company</button>
+                                            </a>
 {#                                        {% elif not user.is_super_admin and user.company %}#}
 {#                                            <button class="btn btn-info" disabled>Join</button>#}
                                         {% else %}

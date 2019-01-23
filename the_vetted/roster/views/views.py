@@ -9,7 +9,7 @@ from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.list import ListView
 
 from roster.forms import UserSignupForm
-from roster.models import User, Company, Team
+from roster.models import User, Company, Team, Invite
 
 
 class UserSignup(FormView):
@@ -126,3 +126,34 @@ class UserList(ListView):
     def get_queryset(self):
         return User.objects.order_by('first_name')
 
+
+def send_invite(request, receiver_pk, sender_pk, company_pk):
+    receiver = User.objects.get(pk=receiver_pk)
+    sender = User.objects.get(pk=sender_pk)
+    company = Company.objects.get(pk=company_pk)
+    status = "Active"
+    invite = Invite(sender=sender, receiver=receiver, company=company, status=status)
+    invite.save()
+    return redirect('home')
+
+
+class InviteList(ListView):
+    model = Invite
+    template_name = 'roster/invites_list.html'
+
+    def get_queryset(self):
+        return Invite.objects.filter(receiver=self.request.user).order_by('-timestamp')
+
+
+def accept_invite(request, invite_pk):
+    # Invite.objects.filter(pk=invite_pk).update(status="Accepted")
+    invite = Invite.objects.get(pk=invite_pk)
+    User.objects.filter(pk=request.user.pk).update(company=invite.company)
+    invite.delete()
+    return redirect('home')
+
+
+def reject_invite(request, invite_pk):
+    invite = Invite.objects.get(pk=invite_pk)
+    invite.delete()
+    return redirect('home')
