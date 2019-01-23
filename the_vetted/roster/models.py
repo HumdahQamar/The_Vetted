@@ -6,6 +6,7 @@ class Company(models.Model):
     name = models.CharField(max_length=20)
     admin = models.OneToOneField('User', related_name='admin', on_delete=models.SET_NULL, null=True)
     using_roster_app = models.BooleanField(default=False)
+    logo = models.ImageField(upload_to='logos/', blank=True)
 
     def __str__(self):
         return self.name
@@ -32,6 +33,7 @@ class User(AbstractUser):
         null=True,
         unique=False
     )
+    avatar = models.ImageField(upload_to='avatars/', blank=True)
 
     def __str__(self):
         return self.username
