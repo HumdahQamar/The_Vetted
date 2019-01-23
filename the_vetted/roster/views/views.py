@@ -14,6 +14,7 @@ from roster.models import User, Company, Team
 
 class UserSignup(FormView):
     form_class = UserSignupForm
+    # form.photo = request.FILES['avatar']
     template_name = 'roster/user_signup.html'
     fields = ['username', 'email', 'password', 'bio']
 
@@ -31,10 +32,10 @@ class UserSignup(FormView):
             last_name=last_name,
             email=email,
             password=raw_password,
-            bio=bio
+            bio=bio,
         )
         auth_login(self.request, user)
-        return redirect('homepage')
+        return redirect('home')
 
 
 class HomePage(LoginRequiredMixin, View):

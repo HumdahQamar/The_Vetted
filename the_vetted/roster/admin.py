@@ -4,7 +4,7 @@ from .models import User, Team, Company, Invite
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'first_name', 'last_name', 'username', 'email', 'bio', 'team', 'get_type')
+    list_display = ('pk', 'first_name', 'last_name', 'username', 'email', 'bio', 'team', 'get_type', 'avatar')
     search_fields = ('first_name', 'last_name', 'username')
     ordering = ('pk',)
 
