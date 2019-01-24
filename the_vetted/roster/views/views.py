@@ -46,7 +46,7 @@ class HomePage(LoginRequiredMixin, ListView):
         user = self.request.user
         context = super().get_context_data(**kwargs)
         context['user'] = user
-        context['new_to_roster_user'] = User.objects.order_by('-date_joined')[:5]
+        context['new_to_roster_user'] = User.objects.order_by('-date_joined').exclude(pk=user.pk)[:5]
         context['new_to_roster_company'] = Company.objects.order_by('-joined_at')[:5]
         return context
 
