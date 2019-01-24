@@ -9,7 +9,7 @@ from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.list import ListView
 
 from roster.forms import UserSignupForm
-from roster.models import User, Company, Team, Invite
+from roster.models import User, Company, Team, Invite, Request
 
 
 class UserSignup(FormView):
@@ -31,7 +31,8 @@ class UserSignup(FormView):
             last_name=last_name,
             email=email,
             password=raw_password,
-            bio=bio
+            bio=bio,
+            is_employee=True
         )
         auth_login(self.request, user)
         return redirect('home')
@@ -156,4 +157,49 @@ def accept_invite(request, invite_pk):
 def reject_invite(request, invite_pk):
     invite = Invite.objects.get(pk=invite_pk)
     invite.delete()
+    return redirect('home')
+
+
+class RequestList(ListView):
+    model = Request
+    template_name = 'roster/requests_list.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_admin:
+            return Request.objects.filter(company=user.company, status='Active').order_by('-timestamp')
+        elif user.is_employee:
+            return Request.objects.filter(sender=user).order_by('-timestamp')
+
+
+# def accept_request(request, request_pk):
+#     user_request = Request
+
+def send_request(request, sender_pk, company_pk):
+    # receiver = User.objects.get(pk=receiver_pk)
+    sender = User.objects.get(pk=sender_pk)
+    company = Company.objects.get(pk=company_pk)
+    status = "Active"
+    request_object = Request(sender=sender, company=company, status=status)
+    request_object.save()
+    return redirect('home')
+
+
+def accept_request(request, request_pk):
+    # Invite.objects.filter(pk=invite_pk).update(status="Accepted")
+    request_object = Request.objects.get(pk=request_pk)
+    User.objects.filter(pk=request_object.sender.pk).update(company=request_object.company)
+    Request.objects.filter(pk=request_object.pk).update(status='Accepted')
+    return redirect('home')
+
+
+def reject_request(request, request_pk):
+    Request.objects.filter(pk=request_pk).update(status='Rejected')
+    # invite.delete()
+    return redirect('home')
+
+
+def delete_request(request, request_pk):
+    request_object = Request.objects.get(pk=request_pk)
+    request_object.delete()
     return redirect('home')
