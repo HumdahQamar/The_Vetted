@@ -1,0 +1,1 @@
+web: gunicorn the_vetted.wsgi --log-file -
