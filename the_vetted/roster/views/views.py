@@ -134,7 +134,7 @@ def send_invite(request, receiver_pk, sender_pk, company_pk):
     status = "Active"
     invite = Invite(sender=sender, receiver=receiver, company=company, status=status)
     invite.save()
-    return redirect('home')
+    return redirect('manage_users')
 
 
 class InviteList(ListView):
@@ -149,13 +149,13 @@ def accept_invite(request, invite_pk):
     invite = Invite.objects.get(pk=invite_pk)
     User.objects.filter(pk=request.user.pk).update(company=invite.company)
     invite.delete()
-    return redirect('home')
+    return redirect('manage_users')
 
 
 def reject_invite(request, invite_pk):
     invite = Invite.objects.get(pk=invite_pk)
     invite.delete()
-    return redirect('home')
+    return redirect('manage_users')
 
 
 class RequestList(ListView):
@@ -176,22 +176,22 @@ def send_request(request, sender_pk, company_pk):
     status = "Active"
     request_object = Request(sender=sender, company=company, status=status)
     request_object.save()
-    return redirect('home')
+    return redirect('request_list')
 
 
 def accept_request(request, request_pk):
     request_object = Request.objects.get(pk=request_pk)
     User.objects.filter(pk=request_object.sender.pk).update(company=request_object.company)
     Request.objects.filter(pk=request_object.pk).update(status='Accepted')
-    return redirect('home')
+    return redirect('request_list')
 
 
 def reject_request(request, request_pk):
     Request.objects.filter(pk=request_pk).update(status='Rejected')
-    return redirect('home')
+    return redirect('request_list')
 
 
 def delete_request(request, request_pk):
     request_object = Request.objects.get(pk=request_pk)
     request_object.delete()
-    return redirect('home')
+    return redirect('request_list')
