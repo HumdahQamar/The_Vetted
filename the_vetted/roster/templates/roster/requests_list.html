@@ -1,0 +1,78 @@
+{% extends 'roster/base.html' %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'roster/style.css' %}">
+    </head>
+
+    <body>
+        {% block contents %}
+            <div class="container-fluid" style="width: 100%;">
+                {% if request_list %}
+                    <div class="row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4 ">
+                        {% for request in request_list %}
+                            <div class="rounded_border">
+                                <br><br>
+                                <div class="row company_logo_parent_div">
+                                    <div class="col-sm-1 company_logo_div">
+                                        {% if user.is_admin %}
+                                            <img src="{% static 'roster/default_avatar_coloured.png' %}" alt="User Avatar" height="150" width="150">
+                                        {% else %}
+                                            <img src="{% static 'roster/default_logo_coloured.png' %}" alt="Company Logo" height="150" width="150">
+                                        {% endif %}
+                                    </div>
+                                <div class="col-sm-2"></div>
+                                    <div class="col text-center">
+                                        {% if user.is_admin %}
+                                            <p>{{ request.sender.first_name }} {{ request.sender.last_name }} requested to join {{ request.company.name }}</p>
+                                            <p>Received on: {{ request.timestamp.day }}-{{ request.timestamp.month }}-{{ request.timestamp.year }}</p>
+                                            <br>
+                                            <a href="{% url 'accept_request' request.pk %}">
+                                                <button class="btn btn-info rostrr_button">Accept</button>
+                                            </a>
+                                            <a href="{% url 'reject_request' request.pk %}">
+                                                <button class="btn btn-danger rostrr_button">Reject</button>
+                                            </a>
+                                        {% elif user.is_employee %}
+                                            <p>You requested to join {{ request.company.name }}</p>
+                                            <p>Sent on: {{ request.timestamp.day }}-{{ request.timestamp.month }}-{{ request.timestamp.year }}</p>
+                                            <p>Status: {{ request.status }}</p>
+                                            <br>
+                                            <a href="{% url 'delete_request' request.pk %}">
+                                                <button class="btn btn-danger rostrr_button">Delete</button>
+                                            </a>
+                                        {% endif %}
+                                        <br><br>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        {% endfor %}
+                    </div>
+                    <div class="col-sm-4"></div>
+                    </div>
+                {% else %}
+                        <div class="row">
+                            <div class="col-sm-4"></div>
+
+                            <div class="col-sm-4 text-center">
+                                <div id=" text-center">
+                                    <img src="{% static 'roster/default_logo_coloured.png' %}" alt="Rostrr Index Logo" style="width: 50%">
+                                    <br><br><br>
+                                    <h5>You have no invites yet.</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+{#                    </div>#}
+                {% endif %}
+
+            </div>
+        {% endblock %}
+    </body>
+</html>

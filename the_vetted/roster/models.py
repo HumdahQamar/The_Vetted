@@ -24,7 +24,7 @@ class Team(models.Model):
 class User(AbstractUser):
     bio = models.CharField(max_length=200)
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
-    is_employee = models.BooleanField(default=False)
+    is_employee = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_super_admin = models.BooleanField(default=False)
     # joined_at = models.DateField(auto_now_add=True)
@@ -61,4 +61,11 @@ class Invite(models.Model):
     company = models.ForeignKey(Company, related_name='company', on_delete=models.CASCADE)
     timestamp = models.DateField(auto_now_add=True)
     message = models.CharField(max_length=500)
+    status = models.CharField(max_length=20, default='Inactive')
+
+
+class Request(models.Model):
+    sender = models.ForeignKey(User, related_name='requet_sender', on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, related_name='request_company', on_delete=models.CASCADE)
+    timestamp = models.DateField(auto_now_add=True)
     status = models.CharField(max_length=20, default='Inactive')
