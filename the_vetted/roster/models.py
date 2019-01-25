@@ -27,7 +27,6 @@ class User(AbstractUser):
     is_employee = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_super_admin = models.BooleanField(default=False)
-    # joined_at = models.DateField(auto_now_add=True)
     company = models.ForeignKey(
         Company,
         related_name='user_company',

@@ -5,7 +5,6 @@ from roster.views import views
 
 
 urlpatterns = [
-    # path('', views.index, name='index'),
     path('browse/companies', views.CompanyList.as_view(), name='browse_companies'),
     path('company/<int:pk>/add', views.company_add, name='company_add_to_rostrr'),
     path('company/<int:pk>/remove', views.company_remove, name='company_remove_from_rostrr'),

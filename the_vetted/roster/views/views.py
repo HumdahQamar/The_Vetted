@@ -1,6 +1,5 @@
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -72,7 +71,7 @@ class UpdateProfile(UpdateView):
     fields = ['first_name', 'last_name', 'email', 'bio']
     pk_url_kwarg = 'pk'
     template_name = 'roster/update_profile.html'
-    success_url = reverse_lazy('home')  # change to some page that displays user info
+    success_url = reverse_lazy('home')
 
     def get_queryset(self):
         return User.objects.filter(pk=self.request.user.pk)
@@ -147,7 +146,6 @@ class InviteList(ListView):
 
 
 def accept_invite(request, invite_pk):
-    # Invite.objects.filter(pk=invite_pk).update(status="Accepted")
     invite = Invite.objects.get(pk=invite_pk)
     User.objects.filter(pk=request.user.pk).update(company=invite.company)
     invite.delete()
@@ -172,11 +170,7 @@ class RequestList(ListView):
             return Request.objects.filter(sender=user).order_by('-timestamp')
 
 
-# def accept_request(request, request_pk):
-#     user_request = Request
-
 def send_request(request, sender_pk, company_pk):
-    # receiver = User.objects.get(pk=receiver_pk)
     sender = User.objects.get(pk=sender_pk)
     company = Company.objects.get(pk=company_pk)
     status = "Active"
@@ -186,7 +180,6 @@ def send_request(request, sender_pk, company_pk):
 
 
 def accept_request(request, request_pk):
-    # Invite.objects.filter(pk=invite_pk).update(status="Accepted")
     request_object = Request.objects.get(pk=request_pk)
     User.objects.filter(pk=request_object.sender.pk).update(company=request_object.company)
     Request.objects.filter(pk=request_object.pk).update(status='Accepted')
@@ -195,7 +188,6 @@ def accept_request(request, request_pk):
 
 def reject_request(request, request_pk):
     Request.objects.filter(pk=request_pk).update(status='Rejected')
-    # invite.delete()
     return redirect('home')
 
 
