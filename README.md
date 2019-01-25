@@ -16,7 +16,7 @@ Install all relevant libraries and dependencies by executing the following comma
 pip install -r requirements.txt
 ```
 
-### Starting the server
+## Starting the server
 Run the following command from ```The_Vetted/the_vetted``` directory to run the server on your local machine
 ```shell
 python manage.py runserver
@@ -30,15 +30,15 @@ python manage.py cratesuperuser
 
 In order to access the admin site, navigate to ```localhost:8000/admin```
 
-### Running the tests
+## Running the tests
 To run the automated testing suite for this application, run
 ```shell
 python manage.py test roster
 ```
 
-### Built with
+## Built with
 * [Django](https://docs.djangoproject.com/en/2.1/)
 * HTML5, Bootstrap, CSS
 
-### Author
+## Author
 [Humdah Qamar](https://github.com/HumdahQamar)
