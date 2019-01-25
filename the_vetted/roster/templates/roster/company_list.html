@@ -30,8 +30,6 @@
                                             <a href="{% url 'send_request' user.pk company.pk %}">
                                                 <button class="btn btn-info rostrr_button">Request to Join</button>
                                             </a>
-{#                                        {% elif not user.is_super_admin and user.company %}#}
-{#                                            <button class="btn btn-info" disabled>Join</button>#}
                                         {% elif user.is_super_admin %}
                                             <form action="{% url 'company_remove_from_rostrr' company.pk %}">
                                                 <input class="btn btn-danger rostrr_button" type="submit" value="Remove from rostrr" />

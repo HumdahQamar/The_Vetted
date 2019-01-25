@@ -9,40 +9,30 @@
     </head>
 
     <body>
-
         {% block contents %}
-        <div class="container-fluid">
-            <div class="row" style="height: 100vh">
-                <div class="col-sm-7">
-                    <div style="background-image:url('{% static 'roster/login_teal_panel.jpg' %}'); height: 100%"></div>
-                </div>
+            <div class="container-fluid">
+                <div class="row" style="height: 100vh">
+                    <div class="col-sm-7">
+                        <div style="background-image:url('{% static 'roster/login_teal_panel.jpg' %}'); height: 100%"></div>
+                    </div>
 
-                <div class="col-sm-3 text-center ">
-                    <div class="update_form_panel">
-                        <img src="{% static 'roster/default_avatar_coloured.png' %}" alt="Rostrr Index Logo" style="width: 70%">
-                        <br><br><br>
-                        <form method="post">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <button type="submit" class="btn btn-info">Update</button>
-                        </form>
-                        <br>
-{#                        <p>New to rostrr? <a href="{% url 'signup' %}">Sign up</a> now.</p>#}
+                    <div class="col-sm-3 text-center ">
+                        <div class="update_form_panel">
+                            <img src="{% static 'roster/default_avatar_coloured.png' %}" alt="Rostrr Index Logo" style="width: 70%">
+                            <br><br><br>
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit" class="btn btn-info">Update</button>
+                            </form>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div style="background-image:url('{% static 'roster/login_teal_panel.jpg' %}'); height: 100%"></div>
                     </div>
                 </div>
-                <div class="col-sm-2">
-                    <div style="background-image:url('{% static 'roster/login_teal_panel.jpg' %}'); height: 100%"></div>
-                </div>
             </div>
-        </div>
-
-
-
-
-{#        <form method="post">{% csrf_token %}#}
-{#            {{ form.as_p }}#}
-{#            <input type="submit" value="Update">#}
-{#        </form>#}
         {% endblock %}
     </body>
 </html>

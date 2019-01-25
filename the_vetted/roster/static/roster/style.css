@@ -20,7 +20,6 @@
 
 .main_container {
     background-color: #f9f9f9;
-    /*height: 100vh;*/
 }
 
 .nav_sub {
@@ -39,7 +38,6 @@
 .homepage_card {
     border: 2px solid #B3B3B3;
     border-radius: 8px;
-    /*float: left;*/
 }
 
 .bg-navbar {
@@ -81,7 +79,6 @@ ul {
 }
 
 .homepage_card_header {
-    /*border: 2px solid #B3B3B3;*/
     background-image: url("login_teal_panel.jpg");
     border-radius: 8px;
 }
@@ -95,10 +92,6 @@ ul {
 .update_form_panel {
     margin-top: 50px;
 }
-
-/*.button-text {*/
-    /*font-color: #f9f9f9;*/
-/*}*/
 
 
 /*.helptext{*/

@@ -37,11 +37,9 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="{% url 'invite_list' %}">Invites</a>
                         </li>
-{#                        {% if user.is_admin or user.is_employee %}#}
                         <li class="nav-item active">
                             <a class="nav-link" href="{% url 'request_list' %}">Requests</a>
                         </li>
-{#                        {% endif %}#}
                     </ul>
                 </div>
 
@@ -63,7 +61,6 @@
             </nav>
             <br>
             {% block user_tag %}
-{#                <p>Logged in as {{ user.username }}</p>#}
             {% endblock %}
             {% block contents %}{% endblock %}
 
