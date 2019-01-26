@@ -25,7 +25,7 @@ SECRET_KEY = '_x(hvp5m!7nzr&ey9kook%n(s_%8)kt1lxnovpk#rw@jfd)dv&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['roster-django.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'roster-django.herokuapp.com']
 
 
 # Application definition
@@ -141,6 +141,6 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-import dj_database_url
-prod_db  =  dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(prod_db)
+# import dj_database_url
+# prod_db  =  dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(prod_db)
